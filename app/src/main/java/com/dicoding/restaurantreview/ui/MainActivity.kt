@@ -16,6 +16,7 @@ import com.dicoding.restaurantreview.R
 import com.dicoding.restaurantreview.data.response.CustomerReviewsItem
 import com.dicoding.restaurantreview.data.response.Restaurant
 import com.dicoding.restaurantreview.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,6 +56,12 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.isLoading.observe(this) { isLoading ->
             showLoading(isLoading)
+        }
+
+        mainViewModel.snackbarText.observe(this) {
+            it.getContentIfNotHandled()?.let { snackBarText ->
+                Snackbar.make(window.decorView.rootView, snackBarText, Snackbar.LENGTH_SHORT).show()
+            }
         }
 
         binding.btnSend.setOnClickListener { view ->
